@@ -1,0 +1,35 @@
+=====================================================
+THIS FILE USED TO PLANNING AND ORGANIZING THE PROJECT
+=====================================================
+
+Start Building The App | Build Authentication
+
+- Clean Files
+- Setup Material UI
+- Setup icons-material
+- Setup react-hook-form
+- Setup yup
+- Setup next auth
+
+- Create auth pages
+	- Create Signup page
+	- Create Signin page
+
+- Create shared folder
+	- Create types folder
+		- Create IUser
+	- Create hooks folder
+		- Create useToggle
+	- Create components folder
+		- Create AppNextMUILink
+		- Create form components [ AppEmailInput, AppPasswordInput, AppTextInput, AppErrorMessage, AppSubmitButton, AppSelectDropdown ]
+- Protect all routes
+
+=====================================================
+
+- handle signup functionality in fake api
+- handle signin functionality in fake api
+
+- Setup redux
+- Create logout button
+- Use firebase for authentication and notification
