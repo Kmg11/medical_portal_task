@@ -9,10 +9,11 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Drawer, List, ListItem, ListItemText } from "@mui/material";
 import { AppNextMUILink, useToggle } from "@/shared";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export function AppBar() {
 	const [isDrawerOpen, toggleDrawer] = useToggle();
+	const { data: session } = useSession();
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
@@ -33,33 +34,27 @@ export function AppBar() {
 						<List style={{ minWidth: 200 }}>
 							<ListItem>
 								<ListItemText>
-									<AppNextMUILink href="/">
-										Appointments
-									</AppNextMUILink>
+									<AppNextMUILink href="/">Appointments</AppNextMUILink>
 								</ListItemText>
 							</ListItem>
 
-							<ListItem>
-								<ListItemText>
-									<AppNextMUILink href="/notifications">
-										Notifications
-									</AppNextMUILink>
-								</ListItemText>
-							</ListItem>
+							{session?.user.role === "patient" && (
+								<ListItem>
+									<ListItemText>
+										<AppNextMUILink href="/medical-records">
+											My Medical Record
+										</AppNextMUILink>
+									</ListItemText>
+								</ListItem>
+							)}
 
-							<ListItem>
-								<ListItemText>
-									<AppNextMUILink href="/medical-records">
-										Medical Records
-									</AppNextMUILink>
-								</ListItemText>
-							</ListItem>
-
-							<ListItem>
-								<ListItemText>
-									<AppNextMUILink href="/patients">Patients</AppNextMUILink>
-								</ListItemText>
-							</ListItem>
+							{session?.user.role === "doctor" && (
+								<ListItem>
+									<ListItemText>
+										<AppNextMUILink href="/patients">Patients</AppNextMUILink>
+									</ListItemText>
+								</ListItem>
+							)}
 						</List>
 					</Drawer>
 

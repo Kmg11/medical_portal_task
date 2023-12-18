@@ -13,8 +13,10 @@ export const AppointmentsHeader = () => {
 			sx={(theme) => ({
 				display: "flex",
 				alignItems: "center",
-				gap: 4,
-				justifyContent: "space-between",
+				gap: 2,
+				flexDirection: { xs: "column", sm: "row" },
+				justifyContent: { xs: "center", sm: "space-between" },
+				flexWrap: "wrap",
 				mb: 4,
 				p: 2,
 				backgroundColor: theme.palette.grey[900],
@@ -25,7 +27,7 @@ export const AppointmentsHeader = () => {
 			</Typography>
 
 			{session?.user.role === "patient" && (
-				<Button variant="contained">
+				<Button variant="contained" size="small">
 					<AppNextMUILink href="/create-appointment">
 						New Appointment
 					</AppNextMUILink>

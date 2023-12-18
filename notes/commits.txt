@@ -98,10 +98,15 @@ Create DoctorsContext
 
 =====================================================
 
-- Send notification to doctor when patient create appointment
-- Send notification to doctor when doctor change appointment status
+Create sendEmailAction | Send email notification to doctor when patient create appointment | Send email notification to patient when doctor change appointment status
+
+- Create sendEmailAction
+- Send email notification to doctor when patient create appointment
+- Send email notification to patient when doctor change appointment status
 - Hide medical records in doctor dashboard
 - Hide patients in patient dashboard
+- Fix AppointmentHeader responsive
+
+=====================================================
 
 - handle reminder if the time of appointement is 30min add new notification
-- Add user name in navbar

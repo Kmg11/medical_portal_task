@@ -1,18 +1,26 @@
 "use server";
 
-import { IAppointment } from "@/shared";
+import {
+	IAppointment,
+	IUser,
+	getDoctorAndPatient,
+	sendEmailAction,
+} from "@/shared";
 import appointmentsData from "@/data/appointments.json";
 import fs from "fs";
+import { format } from "date-fns";
 
 export const changeAppointmentStatusAction = async (
 	appointmentId: IAppointment["id"],
 	appointmentStatus: IAppointment["status"]
 ) => {
 	try {
+		let selectedAppointment: IAppointment | undefined;
 		const newAppointmentsData = appointmentsData.appointments.map(
 			(appointment) => {
 				if (appointment.id === appointmentId) {
 					appointment.status = appointmentStatus;
+					selectedAppointment = appointment as IAppointment;
 				}
 				return appointment;
 			}
@@ -28,8 +36,38 @@ export const changeAppointmentStatusAction = async (
 			"utf8"
 		);
 
-		// TODO: Send notification to doctor
+		if (selectedAppointment) {
+			const { doctor, patient } = getDoctorAndPatient(
+				selectedAppointment.doctorId,
+				selectedAppointment.patientId
+			);
+
+			if (doctor && patient) {
+				await sendAppointmentUpdateEmail(patient, doctor, selectedAppointment);
+			}
+		}
 	} catch (error) {
 		throw error;
 	}
 };
+
+async function sendAppointmentUpdateEmail(
+	patient: IUser,
+	doctor: IUser,
+	appointment: IAppointment
+) {
+	const doctorFullName = `${doctor?.firstName} ${doctor?.lastName}`;
+	const formatedDateTime = format(
+		new Date(appointment.dateTime),
+		"dd/MM/yyyy HH:mm"
+	);
+
+	const message = `Your appointment with Dr. ${doctorFullName} at ${formatedDateTime} has been ${appointment.status}.`;
+
+	await sendEmailAction({
+		email: patient?.email || "",
+		firstName: patient?.firstName || "",
+		subject: "Appointment Update",
+		message: message,
+	});
+}

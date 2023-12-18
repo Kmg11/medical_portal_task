@@ -20,7 +20,7 @@ export const useCreateAppointmentForm = () => {
 	const { doctors } = useDoctorsContext();
 
 	const defaultValues: CreateAppointmentFormValuesType = {
-		doctorId: doctors[0]?.id,
+		doctorId: "",
 		dateTime: new Date().toISOString(),
 	};
 
@@ -28,11 +28,16 @@ export const useCreateAppointmentForm = () => {
 		handleSubmit,
 		setFocus,
 		control,
+		setValue,
 		formState: { errors },
 	} = useForm<CreateAppointmentFormValuesType>({
 		defaultValues,
 		resolver: yupResolver(createAppointmentSchema),
 	});
+
+	useEffect(() => {
+		if (doctors?.length) setValue("doctorId", doctors[0].id);
+	}, [doctors, setValue]);
 
 	useEffect(() => {
 		setFocus("doctorId");
