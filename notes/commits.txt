@@ -36,6 +36,20 @@ Create DashboardLayout | Create AppBar
 
 =====================================================
 
+Create Appointments in home page
+
+- Create AppointmentHeader
+- Create AppointmentList
+- Create AppointmentCard
+
+=====================================================
+
+- Create create-appointment page
+
+- Hide create appointment button in doctor screen
+- Hide action buttons with appointments in AppointmentCard
+- In patient screen change name of appointment with to doctor name
+
 - Hide medical records in doctor dashboard
 - Hide patients in patient dashboard
 

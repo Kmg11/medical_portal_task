@@ -33,7 +33,7 @@ export function AppBar() {
 						<List style={{ minWidth: 200 }}>
 							<ListItem>
 								<ListItemText>
-									<AppNextMUILink href="/appointments">
+									<AppNextMUILink href="/">
 										Appointments
 									</AppNextMUILink>
 								</ListItemText>
