@@ -41,7 +41,9 @@ export function AppBar() {
 							{session?.user.role === "patient" && (
 								<ListItem>
 									<ListItemText>
-										<AppNextMUILink href="/medical-records">
+										<AppNextMUILink
+											href={`/medical-records/${session.user.id}`}
+										>
 											My Medical Record
 										</AppNextMUILink>
 									</ListItemText>
@@ -51,7 +53,9 @@ export function AppBar() {
 							{session?.user.role === "doctor" && (
 								<ListItem>
 									<ListItemText>
-										<AppNextMUILink href="/patients">Patients</AppNextMUILink>
+										<AppNextMUILink href="/medical-records">
+											Medical Records
+										</AppNextMUILink>
 									</ListItemText>
 								</ListItem>
 							)}

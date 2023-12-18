@@ -1,7 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { AppointmentCard } from "./AppointmentCard/AppointmentCard";
-import { IAppointment, IAppointmentPopulated } from "@/shared";
+import {
+	AppNoDataMessage,
+	IAppointment,
+	IAppointmentPopulated,
+} from "@/shared";
 
 interface AppointmentsListProps {
 	appointments: IAppointmentPopulated[];
@@ -18,16 +22,7 @@ export const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 			))}
 
 			{appointments.length === 0 && (
-				<Box
-					sx={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "center",
-						height: "100%",
-					}}
-				>
-					No appointments found
-				</Box>
+				<AppNoDataMessage>No appointments found</AppNoDataMessage>
 			)}
 		</Box>
 	);

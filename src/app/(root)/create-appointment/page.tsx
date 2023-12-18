@@ -1,4 +1,5 @@
-import { CreateAppointmentForm, CreateAppointmentHeader } from "./components";
+import { AppSectionHeader } from "@/shared";
+import { CreateAppointmentForm } from "./components";
 import { checkPermissionAction } from "@/shared/actions";
 
 export default async function CreateAppointmentPage() {
@@ -6,7 +7,7 @@ export default async function CreateAppointmentPage() {
 
 	return (
 		<main>
-			<CreateAppointmentHeader />
+			<AppSectionHeader title="Create Appointment" />
 			<CreateAppointmentForm />
 		</main>
 	);
