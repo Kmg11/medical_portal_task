@@ -1,6 +1,8 @@
 "use client";
+
 import { IAppointment } from "@/shared";
 import { Box, Button, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 interface AppointmentCardProps {
@@ -8,6 +10,8 @@ interface AppointmentCardProps {
 }
 
 export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
+	const { data: session } = useSession();
+
 	return (
 		<Box
 			component="section"
@@ -30,8 +34,8 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 		>
 			<Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
 				<Typography variant="body1" component="h3">
-					Appointment with {appointment.patient} on {appointment.date} at{" "}
-					{appointment.time}
+					Appointment for {appointment.patientId} with Dr.{" "}
+					{appointment.doctorId} on {appointment.dateTime}
 				</Typography>
 
 				<Typography variant="body1" component="span">
@@ -60,14 +64,13 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 				</Box>
 			</Box>
 
-			{/* Doctors Only */}
-			{appointment.status === "pending" && (
+			{appointment.status === "pending" && session?.user.role === "doctor" && (
 				<Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-					<Button variant="contained" color="success">
+					<Button variant="contained" color="success" size="small">
 						Approve
 					</Button>
 
-					<Button variant="contained" color="error">
+					<Button variant="contained" color="error" size="small">
 						Reject
 					</Button>
 				</Box>

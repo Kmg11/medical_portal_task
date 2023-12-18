@@ -1,21 +1,13 @@
 "use client";
 import React from "react";
-import { Box, FormHelperText, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useSignupForm } from "./useSignupForm";
 import { AppEmailInput, AppSelectDropdown, AppSubmitButton } from "@/shared";
 import { NameFields } from "./NameFields/NameFields";
 import { PasswordFields } from "./PasswordFields/PasswordFields";
 
 export const SignupForm = () => {
-	const {
-		errors,
-		control,
-		onSubmit,
-		register,
-		isLoading,
-		isApiError,
-		apiError,
-	} = useSignupForm();
+	const { errors, control, onSubmit, register } = useSignupForm();
 
 	return (
 		<Box component="form" onSubmit={onSubmit} noValidate>
@@ -55,17 +47,11 @@ export const SignupForm = () => {
 			</Grid>
 
 			<AppSubmitButton
-				loading={isLoading}
+				loading={false}
 				buttonProps={{ sx: { mt: 2 }, fullWidth: true }}
 			>
 				Signup
 			</AppSubmitButton>
-
-			{isApiError && apiError && (
-				<FormHelperText error sx={{ mt: 2 }}>
-					{apiError.message}
-				</FormHelperText>
-			)}
 		</Box>
 	);
 };

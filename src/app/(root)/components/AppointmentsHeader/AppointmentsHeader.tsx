@@ -1,9 +1,12 @@
 "use client";
 import { AppNextMUILink } from "@/shared";
 import { Box, Button, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 export const AppointmentsHeader = () => {
+	const { data: session } = useSession();
+
 	return (
 		<Box
 			component="header"
@@ -21,12 +24,13 @@ export const AppointmentsHeader = () => {
 				Appointments
 			</Typography>
 
-			{/* Patients Only */}
-			<Button variant="contained">
-				<AppNextMUILink href="/create-appointment">
-					New Appointment
-				</AppNextMUILink>
-			</Button>
+			{session?.user.role === "patient" && (
+				<Button variant="contained">
+					<AppNextMUILink href="/create-appointment">
+						New Appointment
+					</AppNextMUILink>
+				</Button>
+			)}
 		</Box>
 	);
 };

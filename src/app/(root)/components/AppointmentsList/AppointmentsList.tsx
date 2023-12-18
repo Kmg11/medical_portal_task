@@ -3,34 +3,11 @@ import React from "react";
 import { AppointmentCard } from "./AppointmentCard/AppointmentCard";
 import { IAppointment } from "@/shared";
 
-const appointments: IAppointment[] = [
-	{
-		id: 1,
-		doctor: "Dr. John Doe",
-		patient: "Jane Doe",
-		date: "2021-10-10",
-		time: "10:00",
-		status: "pending",
-	},
-	{
-		id: 2,
-		doctor: "Dr. John Doe",
-		patient: "Jane Doe",
-		date: "2021-10-10",
-		time: "10:00",
-		status: "approved",
-	},
-	{
-		id: 3,
-		doctor: "Dr. John Doe",
-		patient: "Jane Doe",
-		date: "2021-10-10",
-		time: "10:00",
-		status: "rejected",
-	},
-];
+interface AppointmentsListProps {
+	appointments: IAppointment[];
+}
 
-export const AppointmentsList = () => {
+export const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 	return (
 		<Box
 			component="section"

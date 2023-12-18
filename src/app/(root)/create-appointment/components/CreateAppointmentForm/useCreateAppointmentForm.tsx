@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { createAppointmentSchema } from "./createAppointment.schema";
 import { useRouter } from "next/navigation";
 import { doctorsList } from "./doctorsList";
+import { createAppointmentAction } from "../../actions";
+import { useSession } from "next-auth/react";
 
 export type CreateAppointmentFormValuesType = {
 	doctorId: string;
@@ -13,6 +15,7 @@ export type CreateAppointmentFormValuesType = {
 
 export const useCreateAppointmentForm = () => {
 	const router = useRouter();
+	const { data: session } = useSession();
 
 	const defaultValues: CreateAppointmentFormValuesType = {
 		doctorId: doctorsList[0].id,
@@ -20,7 +23,6 @@ export const useCreateAppointmentForm = () => {
 	};
 
 	const {
-		register,
 		handleSubmit,
 		setFocus,
 		control,
@@ -35,12 +37,18 @@ export const useCreateAppointmentForm = () => {
 	}, [setFocus]);
 
 	const onSubmit = handleSubmit(async (data) => {
-		console.log(data);
-		// router.push("/");
+		if (!session?.user?.id) return;
+
+		await createAppointmentAction({
+			dateTime: data.dateTime,
+			doctorId: data.doctorId,
+			patientId: session?.user?.id,
+		});
+
+		router.push("/");
 	});
 
 	return {
-		register,
 		onSubmit,
 		errors,
 		control,

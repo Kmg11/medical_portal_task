@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signupSchema } from "./signup.schema";
-// import { useSignupMutation } from "../../../api";
 import { IUser } from "@/shared";
+import { signupAction } from "../../actions";
+import { useRouter } from "next/navigation";
 
 export type SignupFormValues = Pick<
 	IUser,
@@ -23,12 +24,7 @@ const defaultValues: SignupFormValues = {
 };
 
 export const useSignupForm = () => {
-	// const {
-	// 	mutate: signup,
-	// 	isLoading,
-	// 	isError: isApiError,
-	// 	error: apiError,
-	// } = useSignupMutation();
+	const router = useRouter();
 
 	const {
 		register,
@@ -47,14 +43,15 @@ export const useSignupForm = () => {
 	}, [setFocus]);
 
 	const onSubmit = handleSubmit(async (data) => {
-		// signup({
-		// 	body: {
-		// 		firstName: data.firstName,
-		// 		lastName: data.lastName,
-		// 		email: data.email,
-		// 		password: data.password,
-		// 	},
-		// });
+		await signupAction({
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+			password: data.password,
+			role: data.role,
+		});
+
+		router.push("/auth/signin");
 	});
 
 	return {
@@ -62,8 +59,5 @@ export const useSignupForm = () => {
 		onSubmit,
 		errors,
 		control,
-		isLoading: false,
-		isApiError: false,
-		apiError: { message: "" },
 	};
 };

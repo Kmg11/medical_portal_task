@@ -55,11 +55,34 @@ Create CreateAppointment page
 
 =====================================================
 
-- Fetch doctors as global data
+Build signup and signin functionality | Protect create-appointment page
+
+- Create createAppointmentAction
+- Handle add extra properties to next auth session
+- Split authConfig in lib/authConfig file for easy to import
+- Create next-auth.d to fix next auth types
+- Create signupAction
+- Handle signup functionality 
+- Create signinAction
+- Handle signin functionality
+- Create checkPermissionAction
+- Protect create-appointment page
 - Hide create appointment button in doctor screen
-- Hide action buttons with appointments in AppointmentCard
-- In patient screen change name of appointment with to doctor name
-- Protect pages that is for doctor only and for patients only
+- Hide action buttons in AppointmentCard
+- Create getAppointmentsAction
+- Fetch appointments for belongs to doctor or patient
+
+=====================================================
+
+- Create approve appointment functionality
+- Create cancel appointment functionality
+- replace fake doctors data
+
+- Add user name in navbar
+- Send notification to doctor when patient create appointment
+- Handle responsive in AppointmentCard
+- Format date in AppointmentCard
+- Fetch doctors as global data
 
 - Hide medical records in doctor dashboard
 - Hide patients in patient dashboard

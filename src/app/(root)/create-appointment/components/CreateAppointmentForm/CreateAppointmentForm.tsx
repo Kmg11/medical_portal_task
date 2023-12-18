@@ -9,7 +9,7 @@ import { useCreateAppointmentForm } from "./useCreateAppointmentForm";
 import { doctorsList } from "./doctorsList";
 
 export const CreateAppointmentForm = () => {
-	const { control, errors, onSubmit, register } = useCreateAppointmentForm();
+	const { control, errors, onSubmit } = useCreateAppointmentForm();
 
 	return (
 		<form

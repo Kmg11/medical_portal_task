@@ -1,8 +1,7 @@
 export interface IAppointment {
-	id: number;
-	doctor: string;
-	patient: string;
-	date: string;
-	time: string;
+	id: string;
+	doctorId: string;
+	patientId: string;
+	dateTime: string;
 	status: "pending" | "approved" | "rejected";
 }
