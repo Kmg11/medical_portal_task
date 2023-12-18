@@ -124,8 +124,22 @@ Create medical-records page | Create MedicalRecordsList | Create MedicalRecordCa
 
 =====================================================
 
+Create medicalRecords.json file | Create getMedicalRecordsAction | Fetch medical records in medical records page
+
+- Create medicalRecords.json file
+- Add medicalRecordId to IUser interface
+- Create getUsersMapped util
+- Replace usersMap in getAppointmentsAction with getUsersMapped
+- Create getMedicalRecordsAction
+- Fetch medical records in medical-records page
+- Remove fake medical records data
+
+=====================================================
+
 - Create single medical-record page
 - Protect single medical-record page for doctors only or patient who created the medical record
+- if patient do not have medical record redirect to create medical record page
+- Add edit option
 
 - Send notification to all doctors when patient create medical record
 - handle reminder if the time of appointement is 30min add new notification
@@ -141,3 +155,4 @@ Create medical-records page | Create MedicalRecordsList | Create MedicalRecordCa
 	- Talk about every commit has description describe changes
 	- Talk about commits file
 	- Talk about how to run the app
+	- Talk about how backend handled

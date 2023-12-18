@@ -1,23 +1,14 @@
 "use server";
 
 import appointmentsData from "@/data/appointments.json";
-import usersData from "@/data/users.json";
-import { IAppointmentPopulated, IUser } from "@/shared";
+import { IAppointmentPopulated, IUser, getUsersMapped } from "@/shared";
 
 export const getAppointmentsAction = async (
 	userId: IUser["id"],
 	role: IUser["role"]
 ) => {
 	try {
-		const usersMap = usersData.users
-			.map(({ password, ...user }) => {
-				return user;
-			})
-			.reduce((acc, user) => {
-				acc[user.id] = user as IUser;
-
-				return acc;
-			}, {} as Record<IUser["id"], IUser>);
+		const usersMap = getUsersMapped();
 
 		const appointments = appointmentsData.appointments
 			.filter((appointment) => {

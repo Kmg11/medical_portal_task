@@ -15,6 +15,7 @@ export const signupAction = async (
 			email: user.email,
 			password: user.password,
 			role: user.role,
+			medicalRecordId: null,
 		};
 
 		const newUsersData = {

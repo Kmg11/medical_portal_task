@@ -1,37 +1,16 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { MedicalRecordCard } from "./MedicalRecordCard/MedicalRecordCard";
-import { AppNoDataMessage, IUser } from "@/shared";
-import { IMedicalRecord } from "../../types";
+import { AppNoDataMessage } from "@/shared";
+import { IMedicalRecordPopulated } from "../../types";
 
-const medicalRecords: IMedicalRecord[] = [
-	{
-		id: "1",
-		patient: {
-			id: "1",
-			firstName: "John",
-			lastName: "Doe",
-			email: "john@gmail.com",
-			role: "patient",
-		},
-		createdAt: "2021-10-01T00:00:00.000Z",
-		updatedAt: "2021-10-01T00:00:00.000Z",
-	},
-	{
-		id: "2",
-		patient: {
-			id: "1",
-			firstName: "John",
-			lastName: "Doe",
-			email: "john@gmail.com",
-			role: "patient",
-		},
-		createdAt: "2021-10-01T00:00:00.000Z",
-		updatedAt: "2021-10-01T00:00:00.000Z",
-	},
-];
+interface MedicalRecordsListProps {
+	medicalRecords: IMedicalRecordPopulated[];
+}
 
-export const MedicalRecordsList = () => {
+export const MedicalRecordsList = ({
+	medicalRecords,
+}: MedicalRecordsListProps) => {
 	return (
 		<Box
 			component="section"

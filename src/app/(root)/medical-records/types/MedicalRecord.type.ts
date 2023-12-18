@@ -2,7 +2,11 @@ import { IUser } from "@/shared";
 
 export interface IMedicalRecord {
 	id: string;
-	patient: Omit<IUser, "password">;
+	patientId: IUser["id"];
 	createdAt: string;
 	updatedAt: string;
+}
+
+export interface IMedicalRecordPopulated extends IMedicalRecord {
+	patient: Omit<IUser, "password">;
 }
