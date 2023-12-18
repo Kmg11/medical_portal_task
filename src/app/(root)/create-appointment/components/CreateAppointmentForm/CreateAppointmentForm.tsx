@@ -1,4 +1,5 @@
 "use client";
+
 import {
 	AppDateTimePickerInput,
 	AppSelectDropdown,
@@ -6,25 +7,26 @@ import {
 } from "@/shared";
 import React from "react";
 import { useCreateAppointmentForm } from "./useCreateAppointmentForm";
-import { doctorsList } from "./doctorsList";
+import { useDoctorsContext } from "@/app/providers";
 
 export const CreateAppointmentForm = () => {
 	const { control, errors, onSubmit } = useCreateAppointmentForm();
+	const { doctors } = useDoctorsContext();
 
 	return (
 		<form
 			onSubmit={onSubmit}
 			autoComplete="off"
-			style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+			style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
 		>
 			<AppSelectDropdown
 				id="doctorId"
 				name="doctorId"
 				label="Doctor"
 				control={control}
-				items={doctorsList.map((doctor) => ({
-					label: doctor.label,
-					value: `${doctor.id}`,
+				items={doctors.map((doctor) => ({
+					label: doctor.firstName + " " + doctor.lastName,
+					value: doctor.id,
 				}))}
 				errors={errors}
 				required

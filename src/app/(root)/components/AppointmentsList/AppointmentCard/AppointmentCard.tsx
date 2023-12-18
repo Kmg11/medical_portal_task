@@ -3,6 +3,7 @@
 import { changeAppointmentStatusAction } from "@/app/(root)/actions";
 import { IAppointmentPopulated } from "@/shared";
 import { Box, Button, Typography } from "@mui/material";
+import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 import React from "react";
 
@@ -15,6 +16,10 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 
 	const fullDoctorName = `${appointment.doctor.firstName} ${appointment.doctor.lastName}`;
 	const fullPatientName = `${appointment.patient.firstName} ${appointment.patient.lastName}`;
+	const formatedDate = format(
+		new Date(appointment.dateTime),
+		"dd/MM/yyyy HH:mm"
+	);
 
 	const approveAppointment = async () => {
 		await changeAppointmentStatusAction(appointment.id, "approved");
@@ -44,13 +49,25 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 				backgroundColor: theme.palette.grey[900],
 			})}
 		>
-			<Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+			<Box
+				sx={{
+					display: "flex",
+					gap: 1,
+					alignItems: "center",
+					flexWrap: "wrap",
+					flexDirection: { sx: "column", sm: "row" },
+				}}
+			>
 				<Typography variant="body1" component="h3">
 					Appointment for {fullPatientName} with Dr. {fullDoctorName} on{" "}
-					{appointment.dateTime}
+					{formatedDate}
 				</Typography>
 
-				<Typography variant="body1" component="span">
+				<Typography
+					variant="body1"
+					component="span"
+					sx={{ display: { xs: "none", sm: "block" } }}
+				>
 					-
 				</Typography>
 

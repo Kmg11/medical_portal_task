@@ -84,23 +84,24 @@ Create changeAppointmentStatusAction | Handle approve and reject appointment fun
 
 =====================================================
 
-- replace fake doctors data
+Create DoctorsContext
 
-- Add user name in navbar
+- Fix responsive in AppointmentCard
+- Format date and time in AppointmentCard
+- Create getDoctorsAction
+- Create DoctorsContext
+- Create DoctorsProvider
+- Create useDoctorsContext
+- Replace fake doctors with real ones
+- Create EmailTemplate
+- Install resend email package
+
+=====================================================
+
 - Send notification to doctor when patient create appointment
 - Send notification to doctor when doctor change appointment status
-- Handle responsive in AppointmentCard
-- Format date in AppointmentCard
-- Fetch doctors as global data
-
 - Hide medical records in doctor dashboard
 - Hide patients in patient dashboard
 
-- handle signup functionality in fake api
-- handle signin functionality in fake api
-
-- Setup redux
-- Use firebase for authentication and notification
-
-- use mail.js
 - handle reminder if the time of appointement is 30min add new notification
+- Add user name in navbar

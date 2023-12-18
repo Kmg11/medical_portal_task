@@ -1,12 +1,13 @@
 "use client";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { createAppointmentSchema } from "./createAppointment.schema";
 import { useRouter } from "next/navigation";
-import { doctorsList } from "./doctorsList";
 import { createAppointmentAction } from "../../actions";
 import { useSession } from "next-auth/react";
+import { useDoctorsContext } from "@/app/providers";
 
 export type CreateAppointmentFormValuesType = {
 	doctorId: string;
@@ -16,9 +17,10 @@ export type CreateAppointmentFormValuesType = {
 export const useCreateAppointmentForm = () => {
 	const router = useRouter();
 	const { data: session } = useSession();
+	const { doctors } = useDoctorsContext();
 
 	const defaultValues: CreateAppointmentFormValuesType = {
-		doctorId: doctorsList[0].id,
+		doctorId: doctors[0]?.id,
 		dateTime: new Date().toISOString(),
 	};
 
