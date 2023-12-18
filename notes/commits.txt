@@ -27,9 +27,23 @@ Start Building The App | Build Authentication
 
 =====================================================
 
+Create DashboardLayout | Create AppBar
+
+- Create DashboardLayout
+- Create AppBar
+- Create logout button
+- Handle logout functionality
+
+=====================================================
+
+- Hide medical records in doctor dashboard
+- Hide patients in patient dashboard
+
 - handle signup functionality in fake api
 - handle signin functionality in fake api
 
 - Setup redux
-- Create logout button
 - Use firebase for authentication and notification
+
+- use mail.js
+- handle reminder if the time of appointement is 30min add new notification
