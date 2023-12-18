@@ -74,12 +74,21 @@ Build signup and signin functionality | Protect create-appointment page
 
 =====================================================
 
-- Create approve appointment functionality
-- Create cancel appointment functionality
+Create changeAppointmentStatusAction | Handle approve and reject appointment functionality
+
+- Create changeAppointmentStatusAction
+- Handle approve appointment functionality
+- Handle reject appointment functionality
+- Create IAppointmentPopulated
+- Populate doctor and patient in appointment
+
+=====================================================
+
 - replace fake doctors data
 
 - Add user name in navbar
 - Send notification to doctor when patient create appointment
+- Send notification to doctor when doctor change appointment status
 - Handle responsive in AppointmentCard
 - Format date in AppointmentCard
 - Fetch doctors as global data

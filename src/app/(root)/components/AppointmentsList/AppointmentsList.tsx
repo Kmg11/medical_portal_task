@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { AppointmentCard } from "./AppointmentCard/AppointmentCard";
-import { IAppointment } from "@/shared";
+import { IAppointment, IAppointmentPopulated } from "@/shared";
 
 interface AppointmentsListProps {
-	appointments: IAppointment[];
+	appointments: IAppointmentPopulated[];
 }
 
 export const AppointmentsList = ({ appointments }: AppointmentsListProps) => {

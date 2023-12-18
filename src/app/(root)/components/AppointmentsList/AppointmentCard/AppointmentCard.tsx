@@ -1,16 +1,28 @@
 "use client";
 
-import { IAppointment } from "@/shared";
+import { changeAppointmentStatusAction } from "@/app/(root)/actions";
+import { IAppointmentPopulated } from "@/shared";
 import { Box, Button, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React from "react";
 
 interface AppointmentCardProps {
-	appointment: IAppointment;
+	appointment: IAppointmentPopulated;
 }
 
 export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 	const { data: session } = useSession();
+
+	const fullDoctorName = `${appointment.doctor.firstName} ${appointment.doctor.lastName}`;
+	const fullPatientName = `${appointment.patient.firstName} ${appointment.patient.lastName}`;
+
+	const approveAppointment = async () => {
+		await changeAppointmentStatusAction(appointment.id, "approved");
+	};
+
+	const rejectAppointment = async () => {
+		await changeAppointmentStatusAction(appointment.id, "rejected");
+	};
 
 	return (
 		<Box
@@ -34,8 +46,8 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 		>
 			<Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
 				<Typography variant="body1" component="h3">
-					Appointment for {appointment.patientId} with Dr.{" "}
-					{appointment.doctorId} on {appointment.dateTime}
+					Appointment for {fullPatientName} with Dr. {fullDoctorName} on{" "}
+					{appointment.dateTime}
 				</Typography>
 
 				<Typography variant="body1" component="span">
@@ -66,11 +78,21 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 
 			{appointment.status === "pending" && session?.user.role === "doctor" && (
 				<Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-					<Button variant="contained" color="success" size="small">
+					<Button
+						variant="contained"
+						color="success"
+						size="small"
+						onClick={approveAppointment}
+					>
 						Approve
 					</Button>
 
-					<Button variant="contained" color="error" size="small">
+					<Button
+						variant="contained"
+						color="error"
+						size="small"
+						onClick={rejectAppointment}
+					>
 						Reject
 					</Button>
 				</Box>
