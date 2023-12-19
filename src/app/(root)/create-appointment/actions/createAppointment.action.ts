@@ -10,6 +10,7 @@ import {
 } from "@/shared";
 import appointmentsJson from "@/data/appointments.json";
 import { format } from "date-fns";
+import { revalidatePath } from "next/cache";
 
 const appointmentsData = appointmentsJson as AppointmentsDataFile;
 
@@ -45,6 +46,8 @@ export const createAppointmentAction = async (
 		if (doctor && patient) {
 			await sendAppointmentEmail(patient, doctor, newAppointment);
 		}
+
+		revalidatePath("/");
 	} catch (error) {
 		throw error;
 	}

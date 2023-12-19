@@ -183,8 +183,6 @@ const sendEmailToAllDoctors = async (
 
 	const updatedMessage = `${patientFullName} updated his/her medical record on ${formatedDateTime}, please check your medical records page for more details.`;
 
-	console.log("emails", emails);
-
 	await sendEmailAction({
 		email: emails,
 		firstName: "Doctors",
