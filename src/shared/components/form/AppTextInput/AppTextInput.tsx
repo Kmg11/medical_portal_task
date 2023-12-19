@@ -19,6 +19,7 @@ interface AppTextInputProps<FormValuesType extends FieldValues> {
 	id: string;
 	name: Path<FormValuesType>;
 	label: string;
+	type?: "text" | "number";
 	register: UseFormRegister<FormValuesType>;
 
 	errors: FieldErrors<FormValuesType>;
@@ -39,7 +40,6 @@ interface AppTextInputProps<FormValuesType extends FieldValues> {
 	inputProps?: Omit<
 		OutlinedInputProps,
 		| "id"
-		| "type"
 		| "name"
 		| "label"
 		| "required"
@@ -58,6 +58,7 @@ export const AppTextInput = <FormValuesType extends FieldValues>({
 	id,
 	name,
 	label,
+	type = "text",
 	register,
 
 	errors,
@@ -95,7 +96,7 @@ export const AppTextInput = <FormValuesType extends FieldValues>({
 
 			<OutlinedInput
 				id={id}
-				type="text"
+				type={type}
 				inputMode="text"
 				{...register(name)}
 				label={label}

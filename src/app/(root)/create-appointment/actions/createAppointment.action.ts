@@ -2,14 +2,16 @@
 
 import fs from "fs";
 import {
+	AppointmentsDataFile,
 	IAppointment,
 	IUser,
 	getDoctorAndPatient,
 	sendEmailAction,
 } from "@/shared";
-import appointmentsData from "@/data/appointments.json";
-import usersData from "@/data/users.json";
+import appointmentsJson from "@/data/appointments.json";
 import { format } from "date-fns";
+
+const appointmentsData = appointmentsJson as AppointmentsDataFile;
 
 export const createAppointmentAction = async (
 	appointment: Pick<IAppointment, "doctorId" | "dateTime" | "patientId">

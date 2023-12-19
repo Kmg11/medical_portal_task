@@ -1,7 +1,14 @@
 "use server";
 
-import appointmentsData from "@/data/appointments.json";
-import { IAppointmentPopulated, IUser, getUsersMapped } from "@/shared";
+import appointmentsJson from "@/data/appointments.json";
+import {
+	AppointmentsDataFile,
+	IAppointmentPopulated,
+	IUser,
+	getUsersMapped,
+} from "@/shared";
+
+const appointmentsData = appointmentsJson as AppointmentsDataFile;
 
 export const getAppointmentsAction = async (
 	userId: IUser["id"],

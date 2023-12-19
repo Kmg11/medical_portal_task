@@ -5,6 +5,8 @@ import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
 import { theme } from "./theme";
 import { DoctorsProvider, NextAuthProvider } from "./providers";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/shared";
 
 const roboto = Roboto({
 	subsets: ["latin"],
@@ -19,15 +21,17 @@ export const metadata: Metadata = {
 	description: "Medical portal for patients and doctors",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
+	const session = await getServerSession(authConfig);
+
 	return (
 		<html lang="en">
 			<body className={roboto.className}>
-				<NextAuthProvider>
+				<NextAuthProvider session={session}>
 					<DoctorsProvider>
 						<AppRouterCacheProvider>
 							<ThemeProvider theme={theme}>

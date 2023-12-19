@@ -1,8 +1,10 @@
 "use server";
 
-import medicalRecordsData from "@/data/medicalRecords.json";
+import medicalRecordsJson from "@/data/medicalRecords.json";
 import { getUsersMapped } from "@/shared";
-import { IMedicalRecordPopulated } from "../types";
+import { IMedicalRecordPopulated, MedicalRecordsDataFile } from "../types";
+
+const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
 
 export const getMedicalRecordsAction = async () => {
 	try {

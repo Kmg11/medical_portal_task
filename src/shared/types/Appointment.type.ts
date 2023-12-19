@@ -12,3 +12,8 @@ export interface IAppointmentPopulated extends IAppointment {
 	doctor: IUser;
 	patient: IUser;
 }
+
+export interface AppointmentsDataFile {
+	index: number;
+	appointments: IAppointment[];
+}

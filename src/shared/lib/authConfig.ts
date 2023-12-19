@@ -42,12 +42,12 @@ export const authConfig: AuthOptions = {
 			session.user = token.user as any;
 			return session;
 		},
-		jwt: ({ token, user }) => {
+		jwt: ({ token, user, session }) => {
 			if (user) {
 				const u = user as unknown as any;
 				token.user = { ...(token.user as any), ...u };
 			}
-			return token;
+			return { ...token, ...user, ...session };
 		},
 	},
 };

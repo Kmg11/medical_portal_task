@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { IMedicalRecord } from "../../../types";
+import { IMedicalRecordPopulated } from "../../../types";
 import { Box, Typography } from "@mui/material";
 import { AppNextMUILink } from "@/shared";
 import { format } from "date-fns";
 
 interface MedicalRecordCardProps {
-	medicalRecord: IMedicalRecord;
+	medicalRecord: IMedicalRecordPopulated;
 }
 
 export const MedicalRecordCard = ({
@@ -22,7 +22,7 @@ export const MedicalRecordCard = ({
 				backgroundColor: t.palette.grey[900],
 			})}
 		>
-			<AppNextMUILink href={`/medical-records/${medicalRecord.patient.id}`}>
+			<AppNextMUILink href={`/medical-records/${medicalRecord.id}`}>
 				<Box
 					sx={{
 						display: "flex",

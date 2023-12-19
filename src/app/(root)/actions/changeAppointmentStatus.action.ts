@@ -1,14 +1,17 @@
 "use server";
 
 import {
+	AppointmentsDataFile,
 	IAppointment,
 	IUser,
 	getDoctorAndPatient,
 	sendEmailAction,
 } from "@/shared";
-import appointmentsData from "@/data/appointments.json";
+import appointmentsJson from "@/data/appointments.json";
 import fs from "fs";
 import { format } from "date-fns";
+
+const appointmentsData = appointmentsJson as AppointmentsDataFile;
 
 export const changeAppointmentStatusAction = async (
 	appointmentId: IAppointment["id"],

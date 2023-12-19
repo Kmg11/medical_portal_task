@@ -1,1 +1,1 @@
-{"index":2,"users":[{"id":"0","firstName":"Kirolos","lastName":"Mahfouz","email":"kirolosmahfouz15@gmail.com","password":"Asd123","role":"patient"},{"id":"1","firstName":"Kirolos","lastName":"Mahfouz","email":"kirolosmahfouz155@gmail.com","password":"Asd123","role":"doctor"}]}
+{"index":2,"users":[{"id":"1","firstName":"Kirolosfgh","lastName":"Mahfouzfdsadsadsad","email":"kirolosmahfouz15@gmail.com","password":"Asd123","role":"patient","gender":"male","dateOfBirth":"2005-12-19T12:54:03.723Z","address":"","phoneNumber":"","medicalRecordId":"1"}]}

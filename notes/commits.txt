@@ -136,15 +136,43 @@ Create medicalRecords.json file | Create getMedicalRecordsAction | Fetch medical
 
 =====================================================
 
+Create CreateMedicalRecord page | Create CreateOrEditMedicalRecordForm
+
+- Pass session to SessionProvider
+- Create belongToUserPermissionAction
 - Create single medical-record page
 - Protect single medical-record page for doctors only or patient who created the medical record
-- if patient do not have medical record redirect to create medical record page
-- Add edit option
+- Create getSingleMedicalRecordAction
+- Create CreateMedicalRecord page
+- Protect create-medical-record page for patients only
+- Create CreateOrEditMedicalRecordForm component
+- Create useCreateOrEditMedicalRecordForm hook
+- Create CreateOrEditMedicalRecordSchema
+- Create AppDatePicker component
+- Create MedicalRecordSection component
+- Create MedicalRecordSectionHeader component
+- Create PatientInformation component
+- Create VitalSigns component
+- Add new properties to IUser [ gender, dateOfBirth, phoneNumber, address ]
+- Add new properties to IMedicalRecord [ height, weight, bloodPressure, temperature, heartRate, respiratoryRate ]
+- Create getPatientWithMedicalRecordsAction
+- Create createOrEditMedicalRecordAction
+- Enhance AppErrorMessage component
+- Enhance authConfig to handle update session
 
-- Send notification to all doctors when patient create medical record
+=====================================================
+
+- Add edit option
+- Handle error if id of user not found
+- hide edit and create page if doctor
+
+- Send notification to all doctors when patient create medical record or update
 - handle reminder if the time of appointement is 30min add new notification
 - Rename EmailTemplate to AppEmailTemplate
 - Move appointement type to home page
+- Type readme file
+- Check typescript errors or eslint
+- Add seo
 
 - Video
 	- Tech stack [ Next.js, React.js, TypeScript, Material UI, Next Auth, resend ]

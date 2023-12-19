@@ -18,7 +18,8 @@ export const AppErrorMessage = <FormValuesType extends FieldValues>({
 }: AppErrorMessageProps<FormValuesType>) => {
 	const { sx, ...restTextProps } = testProps || {};
 
-	const hasError = errors[name] ? true : false;
+	const error = getValue<FormValuesType>(errors, name.split("."));
+	const hasError = error ? true : false;
 
 	return hasError ? (
 		<FormHelperText
@@ -27,7 +28,24 @@ export const AppErrorMessage = <FormValuesType extends FieldValues>({
 			sx={{ mt: 1, color: red[600], ...sx }}
 			{...restTextProps}
 		>
-			<>* {errors?.[name]?.message}</>
+			<>* {error?.message}</>
 		</FormHelperText>
 	) : null;
 };
+
+function getValue<FormValuesType extends FieldValues>(
+	obj: FieldErrors<FormValuesType>,
+	keys: string[]
+) {
+	let result = obj;
+
+	for (const key of keys) {
+		if (result && result.hasOwnProperty(key)) {
+			result = result[key] as any;
+		} else {
+			return undefined;
+		}
+	}
+
+	return result;
+}

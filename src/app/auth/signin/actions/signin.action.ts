@@ -1,7 +1,9 @@
 "use server";
 
-import { IUser } from "@/shared";
-import usersData from "@/data/users.json";
+import { IUser, UsersDataFile } from "@/shared";
+import usersJson from "@/data/users.json";
+
+const usersData = usersJson as UsersDataFile;
 
 export const signinAction = async (
 	loggedUser: Pick<IUser, "password" | "email">
@@ -15,7 +17,10 @@ export const signinAction = async (
 		const passwordCorrect = user.password === loggedUser.password;
 		if (!passwordCorrect) throw new Error("Password is incorrect");
 
-		return user;
+		return {
+			...user,
+			password: undefined,
+		};
 	} catch (error) {
 		throw error;
 	}

@@ -1,8 +1,10 @@
 "use server";
 
 import fs from "fs";
-import { IUser } from "@/shared";
-import usersData from "@/data/users.json";
+import { IUser, UsersDataFile } from "@/shared";
+import usersJson from "@/data/users.json";
+
+const usersData = usersJson as UsersDataFile;
 
 export const signupAction = async (
 	user: Pick<IUser, "firstName" | "lastName" | "password" | "role" | "email">
@@ -15,7 +17,6 @@ export const signupAction = async (
 			email: user.email,
 			password: user.password,
 			role: user.role,
-			medicalRecordId: null,
 		};
 
 		const newUsersData = {

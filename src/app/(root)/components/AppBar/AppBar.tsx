@@ -42,7 +42,9 @@ export function AppBar() {
 								<ListItem>
 									<ListItemText>
 										<AppNextMUILink
-											href={`/medical-records/${session.user.id}`}
+											href={`/medical-records/${
+												session.user.medicalRecordId || "create"
+											}`}
 										>
 											My Medical Record
 										</AppNextMUILink>

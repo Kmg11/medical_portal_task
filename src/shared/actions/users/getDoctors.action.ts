@@ -1,7 +1,9 @@
 "use server";
 
-import usersData from "@/data/users.json";
-import { IUser } from "@/shared";
+import usersJson from "@/data/users.json";
+import { IUser, UsersDataFile } from "@/shared";
+
+const usersData = usersJson as UsersDataFile;
 
 export const getDoctorsAction = async () => {
 	const doctors = usersData.users
