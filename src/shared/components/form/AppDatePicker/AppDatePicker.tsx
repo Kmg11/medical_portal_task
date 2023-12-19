@@ -111,16 +111,6 @@ export const AppDatePicker = <FormValuesType extends FieldValues>({
 								views={views}
 								openTo={openTo}
 								sx={{ width: "100%", ...sx }}
-								slotProps={{
-									popper: {
-										placement: placement || "top",
-										modifiers: [
-											{ name: "flip", enabled: false },
-											{ name: "preventOverflow", enabled: true },
-											{ name: "hide", enabled: false },
-										],
-									},
-								}}
 								{...field}
 								value={parseISO(field.value) || null}
 								{...restDatePickerProps}

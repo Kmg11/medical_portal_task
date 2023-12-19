@@ -170,8 +170,21 @@ Create SingleMedicalRecord page UI
 
 =====================================================
 
+Create EditMedicalRecord page
+
 - Create edit page
 - Protect edit page for patients only
+- Protect edit page for patients who created the medical record
+- Fix SingleMedicalRecord page permission check
+- Add loading to CreateAppointment submit button
+- Add loading to Signup submit button
+- Fix AppDatePicker position problem
+- Remove belongToUserPermissionAction
+
+=====================================================
+
+- Date picker value not set in edit and give error
+- Buttons [ Create Appointment, Edit medical record ] wrap link above theme
 
 - Send notification to all doctors when patient create medical record or update
 - handle reminder if the time of appointement is 30min add new notification

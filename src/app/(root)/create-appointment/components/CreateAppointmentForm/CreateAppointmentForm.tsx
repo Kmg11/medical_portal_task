@@ -10,7 +10,8 @@ import { useCreateAppointmentForm } from "./useCreateAppointmentForm";
 import { useDoctorsContext } from "@/app/providers";
 
 export const CreateAppointmentForm = () => {
-	const { control, errors, onSubmit } = useCreateAppointmentForm();
+	const { control, errors, onSubmit, isSubmitting } =
+		useCreateAppointmentForm();
 	const { doctors } = useDoctorsContext();
 
 	return (
@@ -43,7 +44,7 @@ export const CreateAppointmentForm = () => {
 				required
 			/>
 
-			<AppSubmitButton loading={false} buttonProps={{ fullWidth: true }}>
+			<AppSubmitButton loading={isSubmitting} buttonProps={{ fullWidth: true }}>
 				Create
 			</AppSubmitButton>
 		</form>

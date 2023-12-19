@@ -7,7 +7,7 @@ import { NameFields } from "./NameFields/NameFields";
 import { PasswordFields } from "./PasswordFields/PasswordFields";
 
 export const SignupForm = () => {
-	const { errors, control, onSubmit, register } = useSignupForm();
+	const { errors, control, onSubmit, register, isSubmitting } = useSignupForm();
 
 	return (
 		<Box component="form" onSubmit={onSubmit} noValidate>
@@ -47,7 +47,7 @@ export const SignupForm = () => {
 			</Grid>
 
 			<AppSubmitButton
-				loading={false}
+				loading={isSubmitting}
 				buttonProps={{ sx: { mt: 2 }, fullWidth: true }}
 			>
 				Signup

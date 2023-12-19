@@ -3,7 +3,6 @@ import {
 	AppSectionHeader,
 	IUser,
 	authConfig,
-	belongToUserPermissionAction,
 	checkPermissionAction,
 } from "@/shared";
 import React from "react";
@@ -25,13 +24,17 @@ interface SingleMedicalRecordProps {
 export default async function SingleMedicalRecord({
 	params,
 }: SingleMedicalRecordProps) {
+	const session = await getServerSession(authConfig);
+
 	try {
 		await checkPermissionAction("doctor");
 	} catch (e) {
-		await belongToUserPermissionAction(params.medicalRecordId);
+		// * Check if the user owns the medical record
+		if (session?.user.medicalRecordId !== params.medicalRecordId) {
+			redirect("/");
+		}
 	}
 
-	const session = await getServerSession(authConfig);
 	const medicalRecord = await getSingleMedicalRecordAction(
 		params.medicalRecordId
 	);

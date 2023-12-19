@@ -29,7 +29,7 @@ export const useCreateAppointmentForm = () => {
 		setFocus,
 		control,
 		setValue,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 	} = useForm<CreateAppointmentFormValuesType>({
 		defaultValues,
 		resolver: yupResolver(createAppointmentSchema),
@@ -59,5 +59,6 @@ export const useCreateAppointmentForm = () => {
 		onSubmit,
 		errors,
 		control,
+		isSubmitting,
 	};
 };
