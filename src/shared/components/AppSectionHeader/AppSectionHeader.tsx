@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 interface AppSectionHeaderProps {
 	title: React.ReactNode;
@@ -29,11 +29,7 @@ export const AppSectionHeader = ({ button, title }: AppSectionHeaderProps) => {
 				{title}
 			</Typography>
 
-			{button && (
-				<Button variant="contained" size="small">
-					{button}
-				</Button>
-			)}
+			{button && button}
 		</Box>
 	);
 };

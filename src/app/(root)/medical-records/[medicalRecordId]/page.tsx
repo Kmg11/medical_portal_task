@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { getSingleMedicalRecordAction } from "./actions";
 import { redirect } from "next/navigation";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import {
 	MedicalRecordSection,
 	MedicalRecordSectionHeader,
@@ -48,7 +48,9 @@ export default async function SingleMedicalRecord({
 						<AppNextMUILink
 							href={`/medical-records/${params.medicalRecordId}/edit`}
 						>
-							Edit
+							<Button variant="contained" size="small">
+								Edit
+							</Button>
 						</AppNextMUILink>
 					)
 				}

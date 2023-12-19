@@ -1,6 +1,7 @@
 "use client";
 
 import { AppNextMUILink, AppSectionHeader } from "@/shared";
+import { Button } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React from "react";
 
@@ -13,7 +14,9 @@ export const AppointmentsHeader = () => {
 			button={
 				session?.user.role === "patient" && (
 					<AppNextMUILink href="/create-appointment">
-						New Appointment
+						<Button variant="contained" size="small">
+							New Appointment
+						</Button>
 					</AppNextMUILink>
 				)
 			}

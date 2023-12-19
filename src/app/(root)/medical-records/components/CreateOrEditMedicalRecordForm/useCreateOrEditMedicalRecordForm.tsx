@@ -19,8 +19,9 @@ export const useCreateOrEditMedicalRecordForm = (patient: IUser) => {
 				firstName: patient.firstName,
 				lastName: patient.lastName,
 				gender: patient?.gender || "male",
-				dateOfBirth:
-					patient.dateOfBirth || subYears(new Date(), 18).toISOString(),
+				dateOfBirth: patient.dateOfBirth
+					? new Date(patient.dateOfBirth).toISOString()
+					: subYears(new Date(), 18).toISOString(),
 				address: patient?.address || "",
 				phoneNumber: patient?.phoneNumber || "",
 			},

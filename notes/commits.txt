@@ -183,18 +183,23 @@ Create EditMedicalRecord page
 
 =====================================================
 
-- Date picker value not set in edit and give error
-- Buttons [ Create Appointment, Edit medical record ] wrap link above theme
+Fix CreateOrEditMedicalRecordForm initial values | Type README.md file
+
+- Fix Date of birth initial value
+- Handle revalidate medical records after create or edit
+- Enhance Edit medical record and create appointment button click space
+- Type README.md file
+
+=====================================================
+
+- Add live preview lint to readme file
 
 - Send notification to all doctors when patient create medical record or update
 - handle reminder if the time of appointement is 30min add new notification
-- Move appointement type to home page
-- Type readme file
-- Check typescript errors or eslint
-- Add seo
 
 - Video
 	- Tech stack [ Next.js, React.js, TypeScript, Material UI, Next Auth, resend ]
+	- Why i use next.js
 	- Talk about split app into pages and every page treat like module
 	- Talk about component prefix [App]
 	- Talk about shared folder

@@ -5,6 +5,7 @@ import medicalRecordsJson from "@/data/medicalRecords.json";
 import { IUser, UsersDataFile } from "@/shared";
 import { IMedicalRecord, MedicalRecordsDataFile } from "../types";
 import fs from "fs";
+import { revalidatePath } from "next/cache";
 
 const usersData = usersJson as UsersDataFile;
 const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
@@ -69,6 +70,8 @@ export const createOrEditMedicalRecordAction = async ({
 			patientInformation,
 			updatedMedicalRecord.id
 		);
+
+		revalidatePath(`/medical-records/${updatedMedicalRecord.id}`);
 
 		return updatedPatient;
 	} catch (error) {
