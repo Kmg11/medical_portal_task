@@ -2,7 +2,7 @@
 
 ## Links
 
-- [Live Preview]( "Live Preview on Vercel")
+- [Live Preview](https://medical-portal-task.vercel.app "Live Preview on Vercel")
 
 ## Table of Contents
 - [Technologies](#technologies)

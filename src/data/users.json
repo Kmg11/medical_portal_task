@@ -1,1 +1,1 @@
-{"index":4,"users":[{"id":"1","firstName":"Kiroloseqewwqe","lastName":"Mahfouz","email":"kirolosmahfouz15@gmail.com","password":"Asd123","role":"patient","gender":"female","dateOfBirth":"1996-05-22T11:54:03.000Z","address":"AT stree Egypt","phoneNumber":"01229624858","medicalRecordId":"1"},{"id":"2","firstName":"Kirolos","lastName":"Mahfouz","email":"kirolosmahfouz15@gmail.com","password":"Asd123","role":"patient"},{"id":"3","firstName":"Kirolos","lastName":"Mahfouz","email":"kirolosmahfouz15@gmail.com","password":"Asd123","role":"doctor"}]}
+{ "index": 1, "users": [] }
