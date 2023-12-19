@@ -64,7 +64,7 @@ async function sendAppointmentEmail(
 	const message = `You have a new appointment from ${patientFullName} on ${formatedDateTime}, please check your appointments page for more details.`;
 
 	await sendEmailAction({
-		email: doctor?.email || "",
+		email: [doctor?.email] || [""],
 		firstName: doctor?.firstName || "",
 		subject: "New appointment",
 		message: message,

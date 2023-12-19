@@ -192,19 +192,10 @@ Fix CreateOrEditMedicalRecordForm initial values | Type README.md file
 
 =====================================================
 
+Handle send email notification to all doctors when patient create or edit his/her medical record
+
+- Send email notification to all doctors when patient create or edit his/her medical record
+
+=====================================================
+
 - Add live preview lint to readme file
-
-- Send notification to all doctors when patient create medical record or update
-- handle reminder if the time of appointement is 30min add new notification
-
-- Video
-	- Tech stack [ Next.js, React.js, TypeScript, Material UI, Next Auth, resend ]
-	- Why i use next.js
-	- Talk about split app into pages and every page treat like module
-	- Talk about component prefix [App]
-	- Talk about shared folder
-	- Talk about index design pattern
-	- Talk about every commit has description describe changes
-	- Talk about commits file
-	- Talk about how to run the app
-	- Talk about how backend handled

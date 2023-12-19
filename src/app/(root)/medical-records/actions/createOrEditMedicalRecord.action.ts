@@ -2,10 +2,11 @@
 
 import usersJson from "@/data/users.json";
 import medicalRecordsJson from "@/data/medicalRecords.json";
-import { IUser, UsersDataFile } from "@/shared";
+import { IUser, UsersDataFile, sendEmailAction } from "@/shared";
 import { IMedicalRecord, MedicalRecordsDataFile } from "../types";
 import fs from "fs";
 import { revalidatePath } from "next/cache";
+import { format } from "date-fns";
 
 const usersData = usersJson as UsersDataFile;
 const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
@@ -69,6 +70,15 @@ export const createOrEditMedicalRecordAction = async ({
 			patientId,
 			patientInformation,
 			updatedMedicalRecord.id
+		);
+
+		if (!updatedPatient) throw new Error("Patient not found");
+
+		// * Send email to all doctors
+		await sendEmailToAllDoctors(
+			updatedPatient,
+			updatedMedicalRecord,
+			medicalRecord ? "update" : "create"
 		);
 
 		revalidatePath(`/medical-records/${updatedMedicalRecord.id}`);
@@ -153,4 +163,33 @@ const createMedicalRecord = async (
 	);
 
 	return newMedicalRecord;
+};
+
+const sendEmailToAllDoctors = async (
+	patient: IUser,
+	medicalRecord: IMedicalRecord,
+	action: "create" | "update"
+) => {
+	const doctors = usersData.users.filter((user) => user.role === "doctor");
+	const emails = doctors.map((doctor) => doctor.email);
+
+	const patientFullName = `${patient?.firstName} ${patient?.lastName}`;
+	const formatedDateTime = format(
+		new Date(medicalRecord.updatedAt),
+		"dd/MM/yyyy HH:mm"
+	);
+
+	const createdMessage = `${patientFullName} created his/her medical record on ${formatedDateTime}, please check your medical records page for more details.`;
+
+	const updatedMessage = `${patientFullName} updated his/her medical record on ${formatedDateTime}, please check your medical records page for more details.`;
+
+	console.log("emails", emails);
+
+	await sendEmailAction({
+		email: emails,
+		firstName: "Doctors",
+		subject:
+			action === "create" ? "New Medical Record" : "Medical Record Updated",
+		message: action === "create" ? createdMessage : updatedMessage,
+	});
 };
