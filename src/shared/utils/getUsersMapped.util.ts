@@ -1,5 +1,7 @@
-import usersData from "@/data/users.json";
-import { IUser } from "..";
+import usersJson from "@/data/users.json";
+import { IUser, UsersDataFile } from "..";
+
+const usersData = usersJson as UsersDataFile;
 
 export const getUsersMapped = () => {
 	const usersMap = usersData.users

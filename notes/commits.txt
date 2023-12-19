@@ -201,3 +201,7 @@ Handle send email notification to all doctors when patient create or edit his/he
 Clear fake data | Add live preview lint to readme file
 
 =====================================================
+
+Fix typescript errors
+
+=====================================================

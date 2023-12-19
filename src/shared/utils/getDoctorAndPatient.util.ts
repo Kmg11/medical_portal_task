@@ -1,5 +1,7 @@
-import { IUser } from "..";
-import usersData from "@/data/users.json";
+import { IUser, UsersDataFile } from "..";
+import usersJson from "@/data/users.json";
+
+const usersData = usersJson as UsersDataFile;
 
 export function getDoctorAndPatient(
 	doctorId: IUser["id"],
