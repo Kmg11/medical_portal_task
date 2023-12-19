@@ -2,12 +2,11 @@
 
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { MedicalRecordSectionHeader } from "../MedicalRecordSectionHeader/MedicalRecordSectionHeader";
-import { MedicalRecordSection } from "../MedicalRecordSection/MedicalRecordSection";
+import { MedicalRecordSectionHeader } from "../../MedicalRecordSectionHeader/MedicalRecordSectionHeader";
+import { MedicalRecordSection } from "../../MedicalRecordSection/MedicalRecordSection";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import {
 	AppDatePicker,
-	AppEmailInput,
 	AppErrorMessage,
 	AppSelectDropdown,
 	AppTextInput,

@@ -162,13 +162,19 @@ Create CreateMedicalRecord page | Create CreateOrEditMedicalRecordForm
 
 =====================================================
 
-- Add edit option
-- Handle error if id of user not found
-- hide edit and create page if doctor
+Create SingleMedicalRecord page UI
+
+- Create SingleMedicalRecord page UI
+- Create PatientInformationView component
+- Create VitalSignsView component
+
+=====================================================
+
+- Create edit page
+- Protect edit page for patients only
 
 - Send notification to all doctors when patient create medical record or update
 - handle reminder if the time of appointement is 30min add new notification
-- Rename EmailTemplate to AppEmailTemplate
 - Move appointement type to home page
 - Type readme file
 - Check typescript errors or eslint

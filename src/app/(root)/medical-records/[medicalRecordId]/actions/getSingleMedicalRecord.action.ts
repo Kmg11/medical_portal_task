@@ -3,6 +3,7 @@
 import medicalRecordsJson from "@/data/medicalRecords.json";
 import { IUser, getUsersMapped } from "@/shared";
 import { IMedicalRecordPopulated, MedicalRecordsDataFile } from "../../types";
+import { redirect } from "next/navigation";
 
 const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
 
@@ -14,7 +15,7 @@ export const getSingleMedicalRecordAction = async (
 			(medicalRecord) => medicalRecord.id === medicalRecordId
 		);
 
-		if (!medicalRecord) throw new Error("Medical record not found");
+		if (!medicalRecord) redirect("/");
 
 		const usersMap = getUsersMapped();
 		const medicalRecordPopulated: IMedicalRecordPopulated = {
