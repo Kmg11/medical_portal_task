@@ -1,9 +1,5 @@
 # Medical Portal
 
-## Links
-
-- [Live Preview](https://medical-portal-task.vercel.app "Live Preview on Vercel")
-
 ## Table of Contents
 - [Technologies](#technologies)
 - [Getting Started](#getting-started)

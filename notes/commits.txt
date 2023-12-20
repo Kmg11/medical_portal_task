@@ -209,3 +209,7 @@ Fix typescript errors
 Revalidate home page after create or edit medical record
 
 =====================================================
+
+Remove live preview link from README file
+
+=====================================================
