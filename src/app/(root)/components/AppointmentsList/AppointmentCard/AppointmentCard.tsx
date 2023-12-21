@@ -22,11 +22,11 @@ export const AppointmentCard = ({ appointment }: AppointmentCardProps) => {
 	);
 
 	const approveAppointment = async () => {
-		await changeAppointmentStatusAction(appointment.id, "approved");
+		await changeAppointmentStatusAction(appointment._id, "approved");
 	};
 
 	const rejectAppointment = async () => {
-		await changeAppointmentStatusAction(appointment.id, "rejected");
+		await changeAppointmentStatusAction(appointment._id, "rejected");
 	};
 
 	return (

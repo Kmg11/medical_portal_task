@@ -18,7 +18,7 @@ export const MedicalRecordsList = ({
 		>
 			{medicalRecords.map((medicalRecord) => (
 				<MedicalRecordCard
-					key={medicalRecord.id}
+					key={medicalRecord._id}
 					medicalRecord={medicalRecord}
 				/>
 			))}

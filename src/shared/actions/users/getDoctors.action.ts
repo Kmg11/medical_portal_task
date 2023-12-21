@@ -1,14 +1,14 @@
 "use server";
 
-import usersJson from "@/data/users.json";
-import { IUser, UsersDataFile } from "@/shared";
-
-const usersData = usersJson as UsersDataFile;
+import { IUser, UserModel, connectToDB } from "@/shared";
 
 export const getDoctorsAction = async () => {
-	const doctors = usersData.users
-		.filter((user) => user.role === "doctor")
-		.map(({ password, ...doctor }) => doctor);
+	await connectToDB();
 
-	return doctors as Omit<IUser, "password">[];
+	const doctors = await UserModel.find(
+		{ role: "doctor" },
+		{ password: 0 }
+	).lean<Omit<IUser, "password">[]>();
+
+	return doctors;
 };

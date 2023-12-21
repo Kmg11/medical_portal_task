@@ -38,10 +38,10 @@ export const useCreateOrEditMedicalRecordForm = (patient: IUser) => {
 	});
 
 	const onSubmit = form.handleSubmit(async (data) => {
-		if (!session?.user.id) return;
+		if (!session?.user._id) return;
 
 		const updatedPatient = await createOrEditMedicalRecordAction({
-			patientId: session?.user.id,
+			patientId: session?.user._id,
 			patientInformation: data.patientInformation,
 			vitalSigns: data.vitalSigns,
 		});

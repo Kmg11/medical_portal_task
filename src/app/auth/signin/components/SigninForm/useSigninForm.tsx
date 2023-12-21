@@ -26,7 +26,6 @@ export const useSigninForm = () => {
 		formState: { errors },
 	} = useForm<SigninFormValuesType>({
 		defaultValues,
-		mode: "onTouched",
 		resolver: yupResolver(signinSchema),
 	});
 

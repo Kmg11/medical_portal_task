@@ -22,7 +22,7 @@ export const MedicalRecordCard = ({
 				backgroundColor: t.palette.grey[900],
 			})}
 		>
-			<AppNextMUILink href={`/medical-records/${medicalRecord.id}`}>
+			<AppNextMUILink href={`/medical-records/${medicalRecord._id}`}>
 				<Box
 					sx={{
 						display: "flex",

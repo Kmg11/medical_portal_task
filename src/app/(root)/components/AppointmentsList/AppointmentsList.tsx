@@ -1,11 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { AppointmentCard } from "./AppointmentCard/AppointmentCard";
-import {
-	AppNoDataMessage,
-	IAppointment,
-	IAppointmentPopulated,
-} from "@/shared";
+import { AppNoDataMessage, IAppointmentPopulated } from "@/shared";
 
 interface AppointmentsListProps {
 	appointments: IAppointmentPopulated[];
@@ -18,7 +14,7 @@ export const AppointmentsList = ({ appointments }: AppointmentsListProps) => {
 			sx={{ display: "flex", gap: 4, flexDirection: "column" }}
 		>
 			{appointments.map((appointment) => (
-				<AppointmentCard key={appointment.id} appointment={appointment} />
+				<AppointmentCard key={appointment._id} appointment={appointment} />
 			))}
 
 			{appointments.length === 0 && (

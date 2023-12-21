@@ -11,7 +11,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 interface EditMedicalRecordProps {
-	params: { medicalRecordId: IUser["id"] };
+	params: { medicalRecordId: IUser["_id"] };
 }
 
 export default async function EditMedicalRecord({
@@ -27,7 +27,7 @@ export default async function EditMedicalRecord({
 		redirect("/");
 	}
 
-	const patient = await getPatientWithMedicalRecordsAction(session?.user.id);
+	const patient = await getPatientWithMedicalRecordsAction(session?.user._id);
 
 	return (
 		<main>

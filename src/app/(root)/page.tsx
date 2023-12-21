@@ -9,7 +9,7 @@ export default async function HomePage() {
 	if (!session) return redirect("/auth/signin");
 
 	const appointments = await getAppointmentsAction(
-		session?.user.id,
+		session?.user._id,
 		session?.user.role
 	);
 

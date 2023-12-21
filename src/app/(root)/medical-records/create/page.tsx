@@ -11,7 +11,7 @@ export default async function CreateMedicalRecord() {
 	const session = await getServerSession(authConfig);
 	if (!session) redirect("/auth/signin");
 
-	const patient = await getPatientWithMedicalRecordsAction(session?.user.id);
+	const patient = await getPatientWithMedicalRecordsAction(session?.user._id);
 
 	return (
 		<main>

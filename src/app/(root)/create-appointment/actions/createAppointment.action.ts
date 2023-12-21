@@ -1,51 +1,39 @@
 "use server";
 
-import fs from "fs";
 import {
-	AppointmentsDataFile,
+	AppointmentModel,
 	IAppointment,
+	IAppointmentPopulated,
 	IUser,
-	getDoctorAndPatient,
+	connectToDB,
 	sendEmailAction,
 } from "@/shared";
-import appointmentsJson from "@/data/appointments.json";
 import { format } from "date-fns";
 import { revalidatePath } from "next/cache";
-
-const appointmentsData = appointmentsJson as AppointmentsDataFile;
 
 export const createAppointmentAction = async (
 	appointment: Pick<IAppointment, "doctorId" | "dateTime" | "patientId">
 ) => {
 	try {
-		const newAppointment: IAppointment = {
-			id: `${appointmentsData.index}`,
+		await connectToDB();
+
+		const createdAppointment = await AppointmentModel.create({
 			doctorId: appointment.doctorId,
 			patientId: appointment.patientId,
+			doctor: appointment.doctorId,
+			patient: appointment.patientId,
 			dateTime: appointment.dateTime,
 			status: "pending",
-		};
+		});
 
-		const newAppointmentsData = {
-			index: appointmentsData.index + 1,
-			appointments: [...appointmentsData.appointments, newAppointment],
-		};
+		const appointmentPopulated: IAppointmentPopulated =
+			await createdAppointment.populate("doctor patient");
 
-		// * Update appointments.json
-		await fs.promises.writeFile(
-			"src/data/appointments.json",
-			JSON.stringify(newAppointmentsData),
-			"utf8"
+		await sendAppointmentEmail(
+			appointmentPopulated.patient,
+			appointmentPopulated.doctor,
+			createdAppointment
 		);
-
-		const { doctor, patient } = getDoctorAndPatient(
-			appointment.doctorId,
-			appointment.patientId
-		);
-
-		if (doctor && patient) {
-			await sendAppointmentEmail(patient, doctor, newAppointment);
-		}
 
 		revalidatePath("/");
 	} catch (error) {
@@ -67,7 +55,7 @@ async function sendAppointmentEmail(
 	const message = `You have a new appointment from ${patientFullName} on ${formatedDateTime}, please check your appointments page for more details.`;
 
 	await sendEmailAction({
-		email: [doctor?.email] || [""],
+		email: [doctor?.email],
 		firstName: doctor?.firstName || "",
 		subject: "New appointment",
 		message: message,

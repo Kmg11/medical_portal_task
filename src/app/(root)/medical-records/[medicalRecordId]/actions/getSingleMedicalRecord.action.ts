@@ -1,29 +1,19 @@
 "use server";
 
-import medicalRecordsJson from "@/data/medicalRecords.json";
-import { IUser, getUsersMapped } from "@/shared";
-import { IMedicalRecordPopulated, MedicalRecordsDataFile } from "../../types";
-import { redirect } from "next/navigation";
-
-const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
+import { IUser, MedicalRecordModel, connectToDB } from "@/shared";
+import { IMedicalRecordPopulated } from "../../types";
 
 export const getSingleMedicalRecordAction = async (
-	medicalRecordId: IUser["id"]
+	medicalRecordId: IUser["_id"]
 ) => {
 	try {
-		const medicalRecord = medicalRecordsData.medicalRecords.find(
-			(medicalRecord) => medicalRecord.id === medicalRecordId
-		);
+		await connectToDB();
 
-		if (!medicalRecord) redirect("/");
+		const medicalRecord = await MedicalRecordModel.findById(
+			medicalRecordId
+		).populate<IMedicalRecordPopulated>("patient");
 
-		const usersMap = getUsersMapped();
-		const medicalRecordPopulated: IMedicalRecordPopulated = {
-			...medicalRecord,
-			patient: usersMap[medicalRecord.patientId],
-		};
-
-		return medicalRecordPopulated;
+		return medicalRecord as IMedicalRecordPopulated;
 	} catch (error) {
 		throw error;
 	}

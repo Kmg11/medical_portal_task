@@ -34,7 +34,6 @@ export const useSignupForm = () => {
 		formState: { errors, isSubmitting },
 	} = useForm<SignupFormValues>({
 		defaultValues,
-		mode: "onTouched",
 		resolver: yupResolver(signupSchema),
 	});
 

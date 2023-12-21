@@ -18,7 +18,7 @@ import { PatientInformationView } from "./components";
 import { VitalSignsView } from "./components/VitalSignsView/VitalSignsView";
 
 interface SingleMedicalRecordProps {
-	params: { medicalRecordId: IUser["id"] };
+	params: { medicalRecordId: IUser["_id"] };
 }
 
 export default async function SingleMedicalRecord({
@@ -56,7 +56,7 @@ export default async function SingleMedicalRecord({
 				}
 			/>
 
-			<Grid container spacing={3}>
+			<Grid container spacing={3} flexDirection="column">
 				<MedicalRecordSection>
 					<MedicalRecordSectionHeader>
 						Patient Information

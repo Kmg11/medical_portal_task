@@ -1,16 +1,17 @@
 "use server";
 
-import { IUser, UsersDataFile } from "@/shared";
-import usersJson from "@/data/users.json";
-
-const usersData = usersJson as UsersDataFile;
+import { IUser, UserModel, connectToDB } from "@/shared";
 
 export const signinAction = async (
 	loggedUser: Pick<IUser, "password" | "email">
 ) => {
 	try {
+		await connectToDB();
+
 		// * Check if user exists
-		const user = usersData.users.find((u) => u.email === loggedUser.email);
+		const user = await UserModel.findOne({
+			email: loggedUser.email,
+		}).lean<IUser>();
 		if (!user) throw new Error("User does not exist");
 
 		// * Check if password is correct

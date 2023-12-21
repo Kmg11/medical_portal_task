@@ -213,3 +213,17 @@ Revalidate home page after create or edit medical record
 Remove live preview link from README file
 
 =====================================================
+
+Replace dummy data with mongodb
+
+- Install mongoose
+- Create models folder
+- Create User model
+- Create Appointment model
+- Create MedicalRecord model
+- Replace id with _id in IUser, IAppointment and IMedicalRecord interfaces
+- Remove getDoctorAndPatient
+- Remove getUsersMapped
+- Remove data files
+
+=====================================================

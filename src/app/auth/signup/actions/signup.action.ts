@@ -1,17 +1,14 @@
 "use server";
 
-import fs from "fs";
-import { IUser, UsersDataFile } from "@/shared";
-import usersJson from "@/data/users.json";
-
-const usersData = usersJson as UsersDataFile;
+import { IUser, UserModel, connectToDB } from "@/shared";
 
 export const signupAction = async (
 	user: Pick<IUser, "firstName" | "lastName" | "password" | "role" | "email">
 ) => {
 	try {
-		const newUser: IUser = {
-			id: `${usersData.index}`,
+		await connectToDB();
+
+		const newUser: Omit<IUser, "_id"> = {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			email: user.email,
@@ -19,17 +16,7 @@ export const signupAction = async (
 			role: user.role,
 		};
 
-		const newUsersData = {
-			index: usersData.index + 1,
-			users: [...usersData.users, newUser],
-		};
-
-		// * Update appointments.json
-		await fs.promises.writeFile(
-			"src/data/users.json",
-			JSON.stringify(newUsersData),
-			"utf8"
-		);
+		await UserModel.create(newUser);
 	} catch (error) {
 		throw error;
 	}

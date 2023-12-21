@@ -36,7 +36,7 @@ export const useCreateAppointmentForm = () => {
 	});
 
 	useEffect(() => {
-		if (doctors?.length) setValue("doctorId", doctors[0].id);
+		if (doctors?.length) setValue("doctorId", doctors[0]._id);
 	}, [doctors, setValue]);
 
 	useEffect(() => {
@@ -44,12 +44,12 @@ export const useCreateAppointmentForm = () => {
 	}, [setFocus]);
 
 	const onSubmit = handleSubmit(async (data) => {
-		if (!session?.user?.id) return;
+		if (!session?.user?._id) return;
 
 		await createAppointmentAction({
 			dateTime: data.dateTime,
 			doctorId: data.doctorId,
-			patientId: session?.user?.id,
+			patientId: session?.user?._id,
 		});
 
 		router.push("/");

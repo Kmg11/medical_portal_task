@@ -1,23 +1,15 @@
 "use server";
 
-import medicalRecordsJson from "@/data/medicalRecords.json";
-import { getUsersMapped } from "@/shared";
-import { IMedicalRecordPopulated, MedicalRecordsDataFile } from "../types";
-
-const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
+import { MedicalRecordModel, connectToDB } from "@/shared";
+import { IMedicalRecordPopulated } from "../types";
 
 export const getMedicalRecordsAction = async () => {
 	try {
-		const usersMap = getUsersMapped();
+		await connectToDB();
 
-		const medicalRecords = medicalRecordsData.medicalRecords.map(
-			(medicalRecord) => {
-				return {
-					...medicalRecord,
-					patient: usersMap[medicalRecord.patientId],
-				} as IMedicalRecordPopulated;
-			}
-		);
+		const medicalRecords = await MedicalRecordModel.find()
+			.populate("patient")
+			.lean<IMedicalRecordPopulated[]>();
 
 		return medicalRecords;
 	} catch (error) {

@@ -27,7 +27,7 @@ export const CreateAppointmentForm = () => {
 				control={control}
 				items={doctors.map((doctor) => ({
 					label: doctor.firstName + " " + doctor.lastName,
-					value: doctor.id,
+					value: doctor._id,
 				}))}
 				errors={errors}
 				required

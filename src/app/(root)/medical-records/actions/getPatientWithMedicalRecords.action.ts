@@ -1,29 +1,18 @@
 "use server";
 
-import usersJson from "@/data/users.json";
-import medicalRecordsJson from "@/data/medicalRecords.json";
-import { IUser, UsersDataFile } from "@/shared";
-import { MedicalRecordsDataFile } from "../types";
-
-const usersData = usersJson as UsersDataFile;
-const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
+import { IUser, UserModel, connectToDB } from "@/shared";
 
 export const getPatientWithMedicalRecordsAction = async (
-	patientId: IUser["id"]
+	patientId: IUser["_id"]
 ) => {
 	try {
-		const patient = usersData.users.find((user) => user.id === patientId);
+		await connectToDB();
 
-		const medicalRecord = medicalRecordsData.medicalRecords.find(
-			(medicalRecord) => medicalRecord.patientId === patientId
+		const patient = await UserModel.findById(patientId).populate(
+			"medicalRecord"
 		);
 
-		const patientPopulated: IUser = {
-			...(patient as IUser),
-			medicalRecord: medicalRecord,
-		};
-
-		return patientPopulated;
+		return patient;
 	} catch (error) {
 		throw error;
 	}

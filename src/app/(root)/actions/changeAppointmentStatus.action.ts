@@ -1,54 +1,39 @@
 "use server";
 
 import {
-	AppointmentsDataFile,
+	AppointmentModel,
 	IAppointment,
+	IAppointmentPopulated,
 	IUser,
-	getDoctorAndPatient,
+	connectToDB,
 	sendEmailAction,
 } from "@/shared";
-import appointmentsJson from "@/data/appointments.json";
-import fs from "fs";
 import { format } from "date-fns";
-
-const appointmentsData = appointmentsJson as AppointmentsDataFile;
+import { revalidatePath } from "next/cache";
 
 export const changeAppointmentStatusAction = async (
-	appointmentId: IAppointment["id"],
+	appointmentId: IAppointment["_id"],
 	appointmentStatus: IAppointment["status"]
 ) => {
 	try {
-		let selectedAppointment: IAppointment | undefined;
-		const newAppointmentsData = appointmentsData.appointments.map(
-			(appointment) => {
-				if (appointment.id === appointmentId) {
-					appointment.status = appointmentStatus;
-					selectedAppointment = appointment as IAppointment;
-				}
-				return appointment;
-			}
+		await connectToDB();
+
+		const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+			appointmentId,
+			{ status: appointmentStatus },
+			{ new: true }
 		);
 
-		// * Update appointments.json
-		await fs.promises.writeFile(
-			"src/data/appointments.json",
-			JSON.stringify({
-				index: appointmentsData.index,
-				appointments: newAppointmentsData,
-			}),
-			"utf8"
+		const updatedAppointmentPopulated: IAppointmentPopulated =
+			await updatedAppointment.populate("doctor patient");
+
+		await sendAppointmentUpdateEmail(
+			updatedAppointmentPopulated.patient,
+			updatedAppointmentPopulated.doctor,
+			updatedAppointment
 		);
 
-		if (selectedAppointment) {
-			const { doctor, patient } = getDoctorAndPatient(
-				selectedAppointment.doctorId,
-				selectedAppointment.patientId
-			);
-
-			if (doctor && patient) {
-				await sendAppointmentUpdateEmail(patient, doctor, selectedAppointment);
-			}
-		}
+		revalidatePath("/");
 	} catch (error) {
 		throw error;
 	}
@@ -68,7 +53,7 @@ async function sendAppointmentUpdateEmail(
 	const message = `Your appointment with Dr. ${doctorFullName} at ${formatedDateTime} has been ${appointment.status}.`;
 
 	await sendEmailAction({
-		email: [patient?.email] || [""],
+		email: [patient?.email],
 		firstName: patient?.firstName || "",
 		subject: "Appointment Update",
 		message: message,

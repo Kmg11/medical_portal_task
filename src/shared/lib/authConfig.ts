@@ -32,7 +32,7 @@ export const authConfig: AuthOptions = {
 					password: credentials.password,
 				});
 
-				return user;
+				return { ...user, id: user._id };
 			},
 		}),
 	],

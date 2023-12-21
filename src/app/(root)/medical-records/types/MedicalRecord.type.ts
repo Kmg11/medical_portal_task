@@ -1,8 +1,8 @@
 import { IUser } from "@/shared";
 
 export interface IMedicalRecord {
-	id: string;
-	patientId: IUser["id"];
+	_id: string;
+	patientId: IUser["_id"];
 	height?: number;
 	weight?: number;
 	bloodPressure?: string;

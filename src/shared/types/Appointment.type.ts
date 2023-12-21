@@ -1,7 +1,7 @@
 import { IUser } from ".";
 
 export interface IAppointment {
-	id: string;
+	_id: string;
 	doctorId: string;
 	patientId: string;
 	dateTime: string;

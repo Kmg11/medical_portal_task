@@ -1,1 +1,0 @@
-{"index":2,"appointments":[{"id":"1","doctorId":"1","patientId":"2","dateTime":"2023-12-19T18:56:52.396Z","status":"approved","doctor":{"id":"1","firstName":"Kirolos","lastName":"Mahfouz","email":"kirolosmahfouz15@gmail.com","role":"doctor"},"patient":{"id":"2","firstName":"Kirolos","lastName":"Mahfouz","email":"kirolosmahfouz155@gmail.com","role":"patient"}}]}

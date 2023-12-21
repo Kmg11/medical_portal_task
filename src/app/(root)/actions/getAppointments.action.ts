@@ -1,38 +1,29 @@
 "use server";
 
-import appointmentsJson from "@/data/appointments.json";
 import {
-	AppointmentsDataFile,
+	AppointmentModel,
 	IAppointmentPopulated,
 	IUser,
-	getUsersMapped,
+	connectToDB,
 } from "@/shared";
 
-const appointmentsData = appointmentsJson as AppointmentsDataFile;
-
 export const getAppointmentsAction = async (
-	userId: IUser["id"],
+	userId: IUser["_id"],
 	role: IUser["role"]
 ) => {
 	try {
-		const usersMap = getUsersMapped();
+		await connectToDB();
 
-		const appointments = appointmentsData.appointments
-			.filter((appointment) => {
-				if (role === "doctor") return appointment.doctorId === userId;
-				if (role === "patient") return appointment.patientId === userId;
-				return false;
-			})
-			.map((appointment) => {
-				const populatedAppointment = appointment as IAppointmentPopulated;
+		const appointments = AppointmentModel.find({});
 
-				populatedAppointment.doctor = usersMap[appointment.doctorId];
-				populatedAppointment.patient = usersMap[appointment.patientId];
+		if (role === "doctor") appointments.where("doctorId").equals(userId);
+		if (role === "patient") appointments.where("patientId").equals(userId);
 
-				return populatedAppointment;
-			});
+		const appointmentsPopulated = await appointments
+			.populate("doctor patient")
+			.lean();
 
-		return appointments as IAppointmentPopulated[];
+		return appointmentsPopulated as IAppointmentPopulated[];
 	} catch (error) {
 		throw error;
 	}

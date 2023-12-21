@@ -1,15 +1,15 @@
 "use server";
 
-import usersJson from "@/data/users.json";
-import medicalRecordsJson from "@/data/medicalRecords.json";
-import { IUser, UsersDataFile, sendEmailAction } from "@/shared";
-import { IMedicalRecord, MedicalRecordsDataFile } from "../types";
-import fs from "fs";
+import {
+	IUser,
+	MedicalRecordModel,
+	UserModel,
+	connectToDB,
+	sendEmailAction,
+} from "@/shared";
+import { IMedicalRecord } from "../types";
 import { revalidatePath } from "next/cache";
 import { format } from "date-fns";
-
-const usersData = usersJson as UsersDataFile;
-const medicalRecordsData = medicalRecordsJson as MedicalRecordsDataFile;
 
 interface VitalSignsType
 	extends Pick<
@@ -23,7 +23,7 @@ interface VitalSignsType
 	> {}
 
 interface CreateOrEditMedicalRecordActionParams {
-	patientId: IUser["id"];
+	patientId: IUser["_id"];
 	patientInformation: Pick<
 		IUser,
 		| "firstName"
@@ -42,19 +42,20 @@ export const createOrEditMedicalRecordAction = async ({
 	vitalSigns,
 }: CreateOrEditMedicalRecordActionParams) => {
 	try {
-		// * Check if the patient exists
-		const patient = usersData.users.find((user) => user.id === patientId);
-		if (!patient) throw new Error("Patient not found");
+		await connectToDB();
 
-		// * Check if the patient has a medical record
-		const medicalRecord = medicalRecordsData.medicalRecords.find(
-			(medicalRecord) => medicalRecord.patientId === patientId
-		);
+		// * Check if the patient exists
+		const patient = await UserModel.findById(patientId).lean<IUser>();
+		if (!patient) throw new Error("Patient not found");
 
 		let updatedMedicalRecord: IMedicalRecord;
 
+		const medicalRecord = await MedicalRecordModel.findOne({
+			patientId,
+		}).lean<IMedicalRecord>();
+
 		// * If the patient has a medical record, update it
-		if (medicalRecord) {
+		if (patient.medicalRecordId !== null && medicalRecord) {
 			updatedMedicalRecord = await updateMedicalRecord(
 				patientId,
 				medicalRecord,
@@ -69,7 +70,7 @@ export const createOrEditMedicalRecordAction = async ({
 		const updatedPatient = await updatePatientInformation(
 			patientId,
 			patientInformation,
-			updatedMedicalRecord.id
+			updatedMedicalRecord._id
 		);
 
 		if (!updatedPatient) throw new Error("Patient not found");
@@ -81,7 +82,7 @@ export const createOrEditMedicalRecordAction = async ({
 			medicalRecord ? "update" : "create"
 		);
 
-		revalidatePath(`/medical-records/${updatedMedicalRecord.id}`);
+		revalidatePath(`/medical-records/${updatedMedicalRecord._id}`);
 
 		return updatedPatient;
 	} catch (error) {
@@ -90,79 +91,44 @@ export const createOrEditMedicalRecordAction = async ({
 };
 
 const updatePatientInformation = async (
-	patientId: IUser["id"],
+	patientId: IUser["_id"],
 	patientInformation: CreateOrEditMedicalRecordActionParams["patientInformation"],
-	medicalRecordId: IMedicalRecord["id"]
+	medicalRecordId: IMedicalRecord["_id"]
 ) => {
-	const newUsersData = usersData.users.map((user) =>
-		user.id === patientId
-			? { ...user, ...patientInformation, medicalRecordId }
-			: user
-	);
+	const updatedUser = await UserModel.findOneAndUpdate(
+		{ _id: patientId },
+		{ ...patientInformation, medicalRecordId },
+		{ new: true }
+	).lean<IUser>();
 
-	await fs.promises.writeFile(
-		"./src/data/users.json",
-		JSON.stringify({ index: usersData.index, users: newUsersData }),
-		"utf8"
-	);
-
-	return newUsersData.find((user) => user.id === patientId);
+	return updatedUser;
 };
 
 const updateMedicalRecord = async (
-	patientId: IUser["id"],
+	patientId: IUser["_id"],
 	medicalRecord: IMedicalRecord,
 	vitalSigns: VitalSignsType
 ) => {
-	const updatedMedicalRecord: IMedicalRecord = {
-		...medicalRecord,
-		...vitalSigns,
-		updatedAt: new Date().toISOString(),
-	};
+	const updatedMedicalRecord = await MedicalRecordModel.findOneAndUpdate(
+		{ patientId },
+		{ ...medicalRecord, ...vitalSigns },
+		{ new: true }
+	).lean<IMedicalRecord>();
 
-	const newMedicalRecordsData = medicalRecordsData.medicalRecords.map(
-		(medicalRecord) =>
-			medicalRecord.patientId === patientId
-				? updatedMedicalRecord
-				: medicalRecord
-	);
-
-	await fs.promises.writeFile(
-		"./src/data/medicalRecords.json",
-		JSON.stringify({
-			medicalRecords: newMedicalRecordsData,
-			index: medicalRecordsData.index,
-		}),
-		"utf8"
-	);
-
-	return updatedMedicalRecord;
+	return updatedMedicalRecord as IMedicalRecord;
 };
 
 const createMedicalRecord = async (
-	patientId: IUser["id"],
+	patientId: IUser["_id"],
 	vitalSigns: VitalSignsType
 ) => {
-	const newMedicalRecord: IMedicalRecord = {
-		id: `${medicalRecordsData.index}`,
+	const createdMedicalRecord = await MedicalRecordModel.create({
 		patientId,
+		patient: patientId,
 		...vitalSigns,
-		createdAt: new Date().toISOString(),
-		updatedAt: new Date().toISOString(),
-	};
+	});
 
-	const newMedicalRecordsData = {
-		index: medicalRecordsData.index + 1,
-		medicalRecords: [...medicalRecordsData.medicalRecords, newMedicalRecord],
-	};
-
-	await fs.promises.writeFile(
-		"./src/data/medicalRecords.json",
-		JSON.stringify(newMedicalRecordsData),
-		"utf8"
-	);
-
-	return newMedicalRecord;
+	return createdMedicalRecord;
 };
 
 const sendEmailToAllDoctors = async (
@@ -170,7 +136,7 @@ const sendEmailToAllDoctors = async (
 	medicalRecord: IMedicalRecord,
 	action: "create" | "update"
 ) => {
-	const doctors = usersData.users.filter((user) => user.role === "doctor");
+	const doctors = await UserModel.find({ role: "doctor" }).lean<IUser[]>();
 	const emails = doctors.map((doctor) => doctor.email);
 
 	const patientFullName = `${patient?.firstName} ${patient?.lastName}`;
